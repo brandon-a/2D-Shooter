@@ -1,0 +1,9 @@
+.vs/
+2D-Shooter.sln
+2D-Shooter.vcxproj
+2D-Shooter.vcxproj.filters
+2D-Shooter.vcxproj.user
+addons.make
+bin/
+icon.rc
+obj/
