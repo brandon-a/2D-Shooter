@@ -19,8 +19,11 @@
 void ofApp::setup(){
 	ofSetVerticalSync(true);
 	ofBackground(0, 0, 0);
+	gameRunning = false;
+}
 
-	emitter = new Emitter( new SpriteSystem() );
+void ofApp::startGame() {
+	emitter = new Emitter(new SpriteSystem());
 	emitter->setChildSize(10, 10);
 	collider.setPosition(ofVec3f(800, 800));
 	collider.width = 20;
@@ -39,46 +42,49 @@ void ofApp::setup(){
 
 	bHide = true;
 
-	emitter->setPosition(ofVec3f(ofGetWindowWidth()/2, ofGetWindowHeight()/2, 0));
+	emitter->setPosition(ofVec3f(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2, 0));
 	emitter->start();
-
-	
-}
-
-void ofApp::gameStarted() {
-
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
-	emitter->setRate(rate);
-	emitter->setLifespan(life * 1000);    // convert to milliseconds 
-	emitter->setVelocity(ofVec3f(velocity));
-	emitter->update();
+	if (gameRunning) {
+		emitter->setRate(rate);
+		emitter->setLifespan(life * 1000);    // convert to milliseconds 
+		emitter->setVelocity(ofVec3f(velocity));
+		emitter->update();
 
-	checkCollisions();
+		checkCollisions();
+	}
 }
 
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	emitter->draw();
-	collider.draw();
+	if (gameRunning) {
+		emitter->draw();
+		collider.draw();
 
-	if (!bHide) {
-		gui.draw();
+		if (!bHide) {
+			gui.draw();
+		}
+	}
+	else {
+		ofDrawBitmapStringHighlight("Missile Blaster!", 573, 399, ofColor(255, 255, 255), ofColor(0, 0, 0));
+		ofDrawBitmapString("Press the spacebar to continue", 518, 512);
 	}
 }
 
 void ofApp::checkCollisions() {
-
-	// remove all sprites emitted within a radius equal to the max
-	// distance sprite can travel in one frame.
-	//
-	float dist = emitter->maxDistPerFrame();
-	collider.width = dist;
-	collider.height = dist;
-	emitter->sys->removeNear(collider.trans, emitter->maxDistPerFrame());
+	if (gameRunning) {
+		// remove all sprites emitted within a radius equal to the max
+		// distance sprite can travel in one frame.
+		//
+		float dist = emitter->maxDistPerFrame();
+		collider.width = dist;
+		collider.height = dist;
+		emitter->sys->removeNear(collider.trans, emitter->maxDistPerFrame());
+	}
 }
 
 
@@ -91,15 +97,18 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-	ofPoint mouse_cur = ofPoint(x, y);
-	ofVec3f delta = mouse_cur - mouse_last;
-	emitter->trans += delta;
-	mouse_last = mouse_cur;
+	if (gameRunning) {
+		ofPoint mouse_cur = ofPoint(x, y);
+		ofVec3f delta = mouse_cur - mouse_last;
+		emitter->trans += delta;
+		mouse_last = mouse_cur;
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 	mouse_last = ofPoint(x, y);
+	cout << x << ", " << y << endl;
 }
 
 //--------------------------------------------------------------
@@ -119,6 +128,10 @@ void ofApp::mouseExited(int x, int y){
 
 void ofApp::keyPressed(int key) {
 	switch (key) {
+	case ' ':
+		gameRunning = true;
+		startGame();
+		break;
 	case 'C':
 	case 'c':
 		break;

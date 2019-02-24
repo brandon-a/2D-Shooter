@@ -18,7 +18,7 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
 		void checkCollisions();
-		void gameStarted();
+		void startGame();
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -40,6 +40,7 @@ class ofApp : public ofBaseApp{
 		bool imageLoaded;
 
 		bool bHide;
+		bool gameRunning;
 
 		ofxFloatSlider rate;
 		ofxFloatSlider life;
