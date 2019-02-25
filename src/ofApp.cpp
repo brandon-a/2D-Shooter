@@ -36,9 +36,9 @@ void ofApp::startGame() {
 	}*/
 
 	gui.setup();
-	gui.add(rate.setup("rate", 1, 1, 10));
-	gui.add(life.setup("life", 2, .1, 10));
-	gui.add(velocity.setup("velocity", ofVec3f(100, 100, 0), ofVec3f(-1000, -1000, -1000), ofVec3f(1000, 1000, 1000)));
+	gui.add(rate.setup("rate", 5, 1, 10));
+	gui.add(life.setup("life", 5, .1, 10));
+	gui.add(velocity.setup("velocity", ofVec3f(0, -700, 0), ofVec3f(-1000, -1000, -1000), ofVec3f(1000, 1000, 1000)));
 
 	bHide = true;
 
