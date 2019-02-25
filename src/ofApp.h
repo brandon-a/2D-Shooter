@@ -31,6 +31,8 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+        void moveSprite(ofVec3f pos);
+        void moveSprite(MoveDir dir);
 		
 		Emitter *emitter; 
 		Sprite collider;

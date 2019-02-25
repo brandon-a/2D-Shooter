@@ -18,6 +18,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofSetVerticalSync(true);
+    screenSize = ofxLabel(ofParameter<std::string>("screenSize"),1334, 750);
 	ofBackground(0, 0, 0);
 	gameRunning = false;
 }
@@ -49,7 +50,6 @@ void ofApp::startGame() {
 //--------------------------------------------------------------
 void ofApp::update() {
 	if (gameRunning) {
-		emitter->setRate(rate);
 		emitter->setLifespan(life * 1000);    // convert to milliseconds 
 		emitter->setVelocity(ofVec3f(velocity));
 		emitter->update();
@@ -92,17 +92,12 @@ void ofApp::checkCollisions() {
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-//	cout << "mouse( " << x << "," << y << ")" << endl;
+    moveSprite(ofVec3f(x, y, 0));
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-	if (gameRunning) {
-		ofPoint mouse_cur = ofPoint(x, y);
-		ofVec3f delta = mouse_cur - mouse_last;
-		emitter->trans += delta;
-		mouse_last = mouse_cur;
-	}
+    moveSprite(ofVec3f(x, y, 0));
 }
 
 //--------------------------------------------------------------
@@ -129,8 +124,14 @@ void ofApp::mouseExited(int x, int y){
 void ofApp::keyPressed(int key) {
 	switch (key) {
 	case ' ':
-		gameRunning = true;
-		startGame();
+        if(!gameRunning){
+            gameRunning = true;
+            startGame();
+            emitter->setRate(0);
+        }
+        else{
+            emitter->setRate(rate);
+        }
 		break;
 	case 'C':
 	case 'c':
@@ -149,6 +150,18 @@ void ofApp::keyPressed(int key) {
 		break;
 	case 'u':
 		break;
+    case OF_KEY_LEFT:
+            moveSprite(MoveLeft);
+            break;
+    case OF_KEY_RIGHT:
+            moveSprite(MoveRight);
+            break;
+    case OF_KEY_UP:
+            moveSprite(MoveUp);
+            break;
+    case OF_KEY_DOWN:
+            moveSprite(MoveDown);
+            break;
 	case OF_KEY_ALT:
 		break;
 	case OF_KEY_CONTROL:
@@ -164,18 +177,45 @@ void ofApp::keyPressed(int key) {
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
 	switch (key) {
-	case OF_KEY_LEFT:
-	case OF_KEY_RIGHT:
-	case OF_KEY_UP:
-	case OF_KEY_DOWN:
-		break;
-	case OF_KEY_ALT:
-		break;
-	case OF_KEY_CONTROL:
-		break;
-	case OF_KEY_SHIFT:
-		break;
+        case ' ':
+            if(gameRunning){
+                emitter->setRate(0);
+            }
+            break;
+        case OF_KEY_LEFT:
+        case OF_KEY_RIGHT:
+        case OF_KEY_UP:
+        case OF_KEY_DOWN:
+            break;
+        case OF_KEY_ALT:
+            break;
+        case OF_KEY_CONTROL:
+            break;
+        case OF_KEY_SHIFT:
+            break;
 	}
+}
+
+
+void ofApp::moveSprite(ofVec3f pos){
+    if(gameRunning && pos.x >= 0 && pos.x <= 1334 && pos.y >= 0 && pos.y <= 750){
+        emitter->trans = pos;
+    }
+}
+
+void ofApp::moveSprite(MoveDir dir){
+    switch(dir){
+        case MoveLeft: if(emitter->trans.x >= 0) emitter->trans += ofVec3f(-10, 0, 0);
+            break;
+        case MoveRight: if(emitter->trans.x <= 1334) emitter->trans += ofVec3f(10, 0, 0);
+            break;
+        case MoveUp: if(emitter->trans.y >= 0) emitter->trans += ofVec3f(0, -10, 0);
+            break;
+        case MoveDown: if(emitter->trans.y <= 750) emitter->trans += ofVec3f(0, 10, 0);
+            break;
+        case MoveStop: emitter->trans += ofVec3f(0, 0, 0);
+            break;
+    }
 }
 
 //--------------------------------------------------------------
