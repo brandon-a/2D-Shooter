@@ -7,3 +7,8 @@ addons.make
 bin/
 icon.rc
 obj/
+2D-Shooter.xcodeproj/
+Makefile
+Project.xcconfig
+config.make
+openFrameworks-Info.plist
