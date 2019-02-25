@@ -23,3 +23,8 @@ bin/fmodex.dll
 bin/fmodex64.dll
 bin/fmodexL.dll
 bin/fmodexL64.dll
+2D-Shooter.xcodeproj/
+Makefile
+Project.xcconfig
+config.make
+openFrameworks-Info.plist
