@@ -1,3 +1,4 @@
+//Brandon Archbold
 #include "ofApp.h"
 #include "Emitter.h"
 //----------------------------------------------------------------------------------
@@ -31,15 +32,15 @@ void ofApp::startGame() {
 	collider.height = 20;
 	imageLoaded = false;
 
-	/*if (defaultImage.loadImage("C:\\Users\\Brandon\\source\\of_v0.10.1_vs2017_release\\apps\\myApps\\2D-Shooter\\bin\\data\\images\\small.drone.PNG")) {
+	if (defaultImage.loadImage("images/laser.png")) {
 		emitter->setChildImage(defaultImage);
 		imageLoaded = true;
-	}*/
+	}
 
 	gui.setup();
-	gui.add(rate.setup("rate", 5, 1, 10));
+	gui.add(rate.setup("rate", 5, 1, 20));
 	gui.add(life.setup("life", 5, .1, 10));
-	gui.add(velocity.setup("velocity", ofVec3f(0, -700, 0), ofVec3f(-1000, -1000, -1000), ofVec3f(1000, 1000, 1000)));
+	gui.add(velocity.setup("velocity", ofVec3f(0, -1000, 0), ofVec3f(-2000, -2000, -2000), ofVec3f(2000, 2000, 2000)));
 
 	bHide = true;
 
