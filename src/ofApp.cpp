@@ -25,16 +25,23 @@ void ofApp::setup(){
 }
 
 void ofApp::startGame() {
+	ofHideCursor();
 	emitter = new Emitter(new SpriteSystem());
 	emitter->setChildSize(10, 10);
 	collider.setPosition(ofVec3f(800, 800));
 	collider.width = 20;
 	collider.height = 20;
-	imageLoaded = false;
+	missileImgLoaded = false;
+	shipImgLoaded = false;
 
-	if (defaultImage.loadImage("images/laser.png")) {
-		emitter->setChildImage(defaultImage);
-		imageLoaded = true;
+	if (shipImage.loadImage("images/Ship.png")) {
+		emitter->setImage(shipImage);
+		shipImgLoaded = true;
+	}
+
+	if (missileImage.loadImage("images/laser.png")) {
+		emitter->setChildImage(missileImage);
+		missileImgLoaded = true;
 	}
 
 	gui.setup();
@@ -144,6 +151,10 @@ void ofApp::keyPressed(int key) {
 	case 'H':
 	case 'h':
 		bHide = !bHide;
+		if (bHide)
+			ofHideCursor();
+		else
+			ofShowCursor();
 		break;
 	case 'r':
 		break;

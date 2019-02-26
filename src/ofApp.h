@@ -38,9 +38,11 @@ class ofApp : public ofBaseApp{
 		Emitter *emitter; 
 		Sprite collider;
 
-		ofImage defaultImage;
+		ofImage missileImage;
+		ofImage shipImage;
 		ofVec3f mouse_last;
-		bool imageLoaded;
+		bool missileImgLoaded;
+		bool shipImgLoaded;
 
 		bool bHide;
 		bool gameRunning;

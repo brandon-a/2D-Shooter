@@ -39,4 +39,5 @@ public:
 	bool haveImage;
 	float width, height;
 	float childWidth, childHeight;
+	ofSoundPlayer pew;
 };

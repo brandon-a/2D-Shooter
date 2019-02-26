@@ -11,13 +11,14 @@ Emitter::Emitter(SpriteSystem *spriteSys) {
 	lastSpawned = 0;
 	rate = 1;    // sprites/sec
 	haveChildImage = false;
-	haveImage = false;
+	haveImage = true;
 	velocity = ofVec3f(100, 100, 0);
 	drawable = true;
 	width = 50;
 	height = 50;
 	childWidth = 10;
 	childHeight = 10;
+	pew.load("sounds/pew.mp3");
 }
 
 //  Draw the Emitter if it is drawable. In many cases you would want a hidden emitter
@@ -59,6 +60,7 @@ void Emitter::update() {
 		sprite.height = childHeight;
 		sys->add(sprite);
 		lastSpawned = time;
+		pew.play();
 	}
 	sys->update();
 }
