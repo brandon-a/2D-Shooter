@@ -1,4 +1,5 @@
 //Brandon Archbold
+//Example code from EmitterCollision example code used as starting point
 #pragma once
 
 #include "ofMain.h"
@@ -18,7 +19,6 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-		void checkCollisions();
 		void startGame();
 
 		void keyPressed(int key);
@@ -35,8 +35,8 @@ class ofApp : public ofBaseApp{
         void moveSprite(ofVec3f pos);
         void moveSprite(MoveDir dir);
 		
-		Emitter *emitter; 
-		Sprite collider;
+		Emitter *ship;
+		Emitter *spawnTop;
 
 		ofImage missileImage;
 		ofImage shipImage;

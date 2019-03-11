@@ -1,3 +1,4 @@
+//Brandon Archbold - added sound functionality to example code given
 #pragma once
 //----------------------------------------------------------------------------------
 //
@@ -37,7 +38,8 @@ public:
 	bool drawable;
 	bool haveChildImage;
 	bool haveImage;
+	bool hasSound;
 	float width, height;
 	float childWidth, childHeight;
-	ofSoundPlayer pew;
+	ofSoundPlayer pew;					// holds the sound for when shooting the ship's weapon
 };

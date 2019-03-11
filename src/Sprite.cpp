@@ -1,3 +1,5 @@
+// Brandon Archbold
+// Example code from Kevin M. Smith - CS 134 SJSU EmitterCollision example
 #include "Sprite.h"
 
 BaseObject::BaseObject() {
