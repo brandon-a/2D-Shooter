@@ -6,9 +6,9 @@
 //--------------------------------------------------------------
 // Sets up the game, enables vertical sync to eliminate screen tearing, 
 // sets a background color and sets up the game to display the title screen.
-void ofApp::setup(){
+void ofApp::setup() {
 	ofSetVerticalSync(true);
-    screenSize = ofxLabel(ofParameter<std::string>("screenSize"),1334, 750);
+	screenSize = ofxLabel(ofParameter<std::string>("screenSize"), 1334, 750);
 	ofBackground(0, 0, 0);
 	gameRunning = false;
 }
@@ -33,18 +33,27 @@ void ofApp::startGame() {
 
 	ship->setSoundFile("sounds/pew.mp3");
 
+	// sets up the emitter that spits out enemy ships
 	spawnTop = new Emitter(new SpriteSystem());
 	spawnTop->setChildSize(20, 20);
 	spawnTop->drawable = true;
 	spawnTop->haveImage = false;
-	spawnTop->haveChildImage = false;
-	spawnTop->setPosition(ofVec3f(ofGetWindowWidth() / 2, 0));
+	spawnTop->haveChildImage = true;
+	spawnTop->drawable = false;
+	spawnTop->setPosition(ofVec3f(ofGetWindowWidth() / 2, 0));	// adds the enemy ship image
+	if (enemyImage.loadImage("images/Enemy-Ship.png")) {
+		spawnTop->setChildImage(enemyImage);
+	}
 	spawnTop->start();
+
+	enemyVelVec = new ofVec3f(0, 200, 0);	// allows easy modification of velocity vector
 
 	gui.setup();										// sets up the sliders for testing using the h key
 	gui.add(rate.setup("rate", 5, 1, 20));				// sets up the slider for the rate of projectile emissions
 	gui.add(life.setup("life", 5, .1, 10));				// sets up the slider for the lifespan of the projectiles
 	gui.add(velocity.setup("velocity", ofVec3f(0, -1000, 0), ofVec3f(-2000, -2000, -2000), ofVec3f(2000, 2000, 2000))); // sets up the slider for the velocity of the projectiles
+	gui.add(enemyRate.setup("enemy rate", 1, .01, 20));
+	gui.add(enemyVelocity.setup("enemy velocity", *enemyVelVec, ofVec3f(-500, 0, -500), ofVec3f(500, 1000, 500)));
 
 	bHide = true;		// variable to hide and show the panel
 
@@ -61,8 +70,13 @@ void ofApp::update() {
 		ship->update();
 
 		spawnTop->setLifespan(10000);
-		spawnTop->setVelocity(ofVec3f(0, 200, 0));
+		*enemyVelVec = *enemyVelVec + ofVec3f(0, .01, 0);		// slowly increase the velocity of the enemies
+		enemyVelocity = *enemyVelVec;
+		spawnTop->setVelocity(ofVec3f(enemyVelocity));
+		spawnTop->setPosition(ofVec3f(rand() % (40 - ofGetWindowWidth() - 40 + 1),0));		// spawn enemies at random locations along the top of the screen
+		spawnTop->setRate(enemyRate);
 		spawnTop->update();
+		checkCollisions();
 	}
 }
 
@@ -75,12 +89,34 @@ void ofApp::draw(){
 		if (!bHide) {
 			gui.draw();
 		}
+		string scoreText;
+		scoreText += "Score: " + std::to_string(score);
+		ofDrawBitmapString(scoreText, ofPoint(10, 20));
 	}
 	else {		// display the start screen when the game starts
 		ofDrawBitmapStringHighlight("Missile Blaster!", 573, 399, ofColor(255, 255, 255), ofColor(0, 0, 0));
 		ofDrawBitmapString("Press the spacebar to continue", 518, 512);
 	}
+
 }
+
+//  This is a simple O(M x N) collision check
+//  For each missle check to see which invaders you hit and remove them
+// example collision detection code by Kevin Smith
+void ofApp::checkCollisions() {
+	// find the distance at which the two sprites (missles and invaders) will collide
+	// detect a collision when we are within that distance.
+	//
+	float collisionDist = ship->childHeight / 2 + spawnTop->childHeight / 2;
+
+	// Loop through all the missiles, then remove any invaders that are within
+	// "collisionDist" of the missiles.  the removeNear() function returns the
+	// number of missiles removed.
+	//
+	for (int i = 0; i < ship->sys->sprites.size(); i++)
+		score += spawnTop->sys->removeNear(ship->sys->sprites[i].trans, collisionDist);
+}
+
 
 //--------------------------------------------------------------
 // Allows easy control of the ship by essentially turning the mouse into the ship

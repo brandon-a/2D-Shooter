@@ -19,6 +19,7 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
+		void checkCollisions();
 		void startGame();
 
 		void keyPressed(int key);
@@ -40,13 +41,19 @@ class ofApp : public ofBaseApp{
 
 		ofImage missileImage;
 		ofImage shipImage;
+		ofImage enemyImage;
 		ofVec3f mouse_last;
+		ofVec3f* enemyVelVec;
 		bool missileImgLoaded;
 		bool shipImgLoaded;
 
 		bool bHide;
 		bool gameRunning;
 
+		int score = 0;
+
+		ofxVec3Slider enemyVelocity;
+		ofxFloatSlider enemyRate;
 		ofxFloatSlider rate;
 		ofxFloatSlider life;
 		ofxVec3Slider velocity;

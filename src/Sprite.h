@@ -47,7 +47,7 @@ public:
 	void add(Sprite);
 	void remove(int);
 	void update();
-	void removeNear(ofVec3f point, float dist);
+	int removeNear(ofVec3f point, float dist);
 	void draw();
 	vector<Sprite> sprites;
 
