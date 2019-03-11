@@ -70,6 +70,7 @@ void ofApp::update() {
 		ship->update();
 
 		spawnTop->setLifespan(10000);
+		enemyVelVec->x = -200 + (std::rand() % (-200 - 200 + 1));
 		*enemyVelVec = *enemyVelVec + ofVec3f(0, .01, 0);		// slowly increase the velocity of the enemies
 		enemyVelocity = *enemyVelVec;
 		spawnTop->setVelocity(ofVec3f(enemyVelocity));
