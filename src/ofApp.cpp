@@ -135,6 +135,7 @@ void ofApp::keyPressed(int key) {
 		break;
     case OF_KEY_LEFT:
             moveSprite(MoveLeft);
+            cout << "left" << endl;
             break;
     case OF_KEY_RIGHT:
             moveSprite(MoveRight);

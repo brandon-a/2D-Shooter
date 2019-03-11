@@ -29,6 +29,7 @@ void Emitter::draw() {
 	if (drawable) {
 
 		if (haveImage) {
+            ofSetColor(255, 255, 255);
 			image.draw(-image.getWidth() / 2.0 + trans.x, -image.getHeight() / 2.0 + trans.y);
 		}
 		else {
