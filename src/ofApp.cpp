@@ -34,12 +34,12 @@ void ofApp::startGame() {
 	missileImgLoaded = false;
 	shipImgLoaded = false;
 
-	if (shipImage.loadImage("images/Ship.png")) {
+	if (shipImage.load("images/Ship.png")) {
 		emitter->setImage(shipImage);
 		shipImgLoaded = true;
 	}
 
-	if (missileImage.loadImage("images/laser.png")) {
+	if (missileImage.load("images/laser.png")) {
 		emitter->setChildImage(missileImage);
 		missileImgLoaded = true;
 	}
@@ -164,6 +164,7 @@ void ofApp::keyPressed(int key) {
 		break;
     case OF_KEY_LEFT:
             moveSprite(MoveLeft);
+            cout << "left" << endl;
             break;
     case OF_KEY_RIGHT:
             moveSprite(MoveRight);
