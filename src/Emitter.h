@@ -22,6 +22,7 @@ public:
 	void setLifespan(float);
 	void setVelocity(ofVec3f);
 	void setChildImage(ofImage);
+	bool setSoundFile(string file);
 	void setChildSize(float w, float h) { childWidth = w; childHeight = h; }
 	void setImage(ofImage);
 	void setRate(float);
@@ -41,5 +42,5 @@ public:
 	bool hasSound;
 	float width, height;
 	float childWidth, childHeight;
-	ofSoundPlayer pew;					// holds the sound for when shooting the ship's weapon
+	ofSoundPlayer sound;					// holds the sound for when shooting the ship's weapon
 };

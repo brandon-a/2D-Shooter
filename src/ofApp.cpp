@@ -31,6 +31,8 @@ void ofApp::startGame() {
 		missileImgLoaded = true;
 	}
 
+	ship->setSoundFile("sounds/pew.mp3");
+
 	spawnTop = new Emitter(new SpriteSystem());
 	spawnTop->setChildSize(20, 20);
 	spawnTop->drawable = true;

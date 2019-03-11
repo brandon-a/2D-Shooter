@@ -19,7 +19,6 @@ Emitter::Emitter(SpriteSystem *spriteSys) {
 	childWidth = 10;
 	childHeight = 10;
 	hasSound = false;
-	pew.load("sounds/pew.mp3");		// load firing sound file
 }
 
 //  Draw the Emitter if it is drawable. In many cases you would want a hidden emitter
@@ -62,7 +61,8 @@ void Emitter::update() {
 		sprite.height = childHeight;
 		sys->add(sprite);
 		lastSpawned = time;
-		pew.play();				// play sound file every time a missile is fired
+		if(hasSound)
+			sound.play();				// play sound file every time a missile is fired
 	}
 	sys->update();
 }
@@ -92,6 +92,15 @@ void Emitter::setChildImage(ofImage img) {
 	haveChildImage = true;
 	childWidth = img.getWidth();
 	childHeight = img.getHeight();
+}
+
+bool Emitter::setSoundFile(string file) {
+	if (!sound.load(file)) {
+		cout << "Sound file: " << file << " not found or does not exist!\n";
+		return hasSound = false;
+	}
+	else
+		return hasSound = true;
 }
 
 void Emitter::setImage(ofImage img) {
