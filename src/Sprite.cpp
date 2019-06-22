@@ -88,6 +88,7 @@ int SpriteSystem::removeNear(ofVec3f point, float dist) {
 	while (s != sprites.end()) {
 		ofVec3f v = s->trans - point;
 		if (v.length() < dist) {
+			s->trans;
 			tmp = sprites.erase(s);
 			s = tmp;
 			numRemoved++;

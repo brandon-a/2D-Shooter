@@ -30,3 +30,4 @@ config.make
 openFrameworks-Info.plist
 .DS_Store
 bin/2D-ShooterDebug.app/
+src/.vscode
